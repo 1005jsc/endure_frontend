@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import { ClickNumDataType, GoalDataType, GoalType } from '../Types/types';
 import GoalInput from '../components/Main/GoalInput';
+import GoalClear from '../components/Main/GoalClear';
 
 const MainPage = () => {
   const {
@@ -79,6 +80,7 @@ const MainPage = () => {
         </ClickNumSpan>
         <MessageSpan>{clickNumData?.message}</MessageSpan>
       </MessageDiv>
+      <GoalClear />
     </MainPageSec>
   );
 };
@@ -92,7 +94,6 @@ const MainPageSec = styled.section`
 
 const EndureButton = styled.button`
   display: block;
-
   background-color: transparent;
   border: 1px solid #b2b0b0;
   padding: 10px 35px;
@@ -106,6 +107,7 @@ const MessageDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 18px;
 `;
 
 const ClickNumSpan = styled.span`

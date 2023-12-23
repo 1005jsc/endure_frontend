@@ -86,6 +86,7 @@ const GoalInputDiv = styled.div`
   border: 1px solid black;
   display: flex;
   align-items: center;
+  padding: 20px;
 `;
 const GoalTitleSpan = styled.span`
   width: 40px;
@@ -94,11 +95,13 @@ const GoalTitleSpan = styled.span`
 const GoalInputInput = styled.input`
   border: none;
   /* border: 1px solid black; */
-  line-height: 22px;
-  padding-left: 12px;
+  /* line-height: 22px; */
+  margin-left: 20px;
+  padding: 12px 40px;
+  padding-left: 8px;
   font-size: 16px;
-  &:focus {
+  /* &:focus {
     outline: none;
-  }
-  width: 85%;
+  } */
+  flex: 1;
 `;
