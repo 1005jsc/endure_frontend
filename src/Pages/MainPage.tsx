@@ -50,8 +50,10 @@ const MainPage = () => {
 
   return (
     <MainPageSec>
-      <div>
-        <p>
+      <EndureButton onClick={handleClick}>忍</EndureButton>
+
+      <MessageDiv>
+        <ClickNumSpan>
           {clickNumData?.currentNum}/
           {clickNumData?.currentNum
             ? clickNumData?.currentNum >= 0 && clickNumData?.currentNum <= 99
@@ -70,11 +72,9 @@ const MainPage = () => {
               ? 500
               : 100
             : 100}
-        </p>
-        <p>{clickNumData?.message}</p>
-
-        <button onClick={handleClick}>참을인 1번 누르기</button>
-      </div>
+        </ClickNumSpan>
+        <MessageSpan>{clickNumData?.message}</MessageSpan>
+      </MessageDiv>
     </MainPageSec>
   );
 };
@@ -83,4 +83,30 @@ export default MainPage;
 
 const MainPageSec = styled.section`
   padding: 20px 40px;
+  border: 1px solid black;
+`;
+
+const EndureButton = styled.button`
+  display: block;
+
+  background-color: transparent;
+  border: 1px solid #b2b0b0;
+  padding: 10px 35px;
+  margin: auto;
+  font-size: 200px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+`;
+
+const MessageDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ClickNumSpan = styled.span`
+  margin-bottom: 16px;
+`;
+const MessageSpan = styled.span`
+  margin-bottom: 16px;
 `;
