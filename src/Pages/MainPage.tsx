@@ -2,33 +2,35 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
-import { ClickNumDataType } from '../Types/types';
+import { ClickNumDataType, GoalDataType, GoalType } from '../Types/types';
+import GoalInput from '../components/Main/GoalInput';
 
 const MainPage = () => {
   const {
     data: clickNumData,
     isLoading,
     isError,
-  } = useQuery<ClickNumDataType>(['getTodos'], async () => {
+  } = useQuery<ClickNumDataType>(['clickNum'], async () => {
     const response = await axios.get(
-      `${process.env.REACT_APP_SERVER_LOCAL}/clickNum`
+      `${process.env.REACT_APP_SERVER}/clickNum`
     );
 
     return response.data;
   });
 
   const queryClient = useQueryClient();
+
   const { mutate: increaseClickNum } = useMutation(
     async () => {
       const response = await axios.put(
-        `${process.env.REACT_APP_SERVER_LOCAL}/clickNum`
+        `${process.env.REACT_APP_SERVER}/clickNum`
       );
 
       return response.data;
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['getTodos']);
+        queryClient.invalidateQueries(['clickNum']);
       },
       onError(error, variables, context) {
         console.log('에러뜸 11');
@@ -50,6 +52,8 @@ const MainPage = () => {
 
   return (
     <MainPageSec>
+      <GoalInput />
+
       <EndureButton onClick={handleClick}>忍</EndureButton>
 
       <MessageDiv>
@@ -82,8 +86,8 @@ const MainPage = () => {
 export default MainPage;
 
 const MainPageSec = styled.section`
-  padding: 20px 40px;
-  border: 1px solid black;
+  padding: 40px 40px;
+  /* border: 1px solid black; */
 `;
 
 const EndureButton = styled.button`
@@ -95,7 +99,7 @@ const EndureButton = styled.button`
   margin: auto;
   font-size: 200px;
   border-radius: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 `;
 
 const MessageDiv = styled.div`
