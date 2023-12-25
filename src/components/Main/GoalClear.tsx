@@ -1,23 +1,30 @@
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
+import { convertJsDateToMysqlDatetime } from '../../util/date/date';
 
-const GoalClear = () => {
+type GoalClearProps = {
+  id: number;
+};
+
+const GoalClear = ({ id }: GoalClearProps) => {
   const queryClient = useQueryClient();
 
   const { mutate: clearGoal } = useMutation(
-    async () => {
+    async (id: number) => {
       const response = await axios.post(
-        `${process.env.REACT_APP_SERVER}/goal/done`
+        `${process.env.REACT_APP_SERVER}/goal/done`,
+        {
+          id: id,
+          doneDate: convertJsDateToMysqlDatetime(),
+        }
       );
 
       return response.data;
     },
     {
       onSuccess: () => {
-        console.log('잘 됬으');
-        queryClient.invalidateQueries(['clickNum']);
-        queryClient.invalidateQueries(['goal']);
+        queryClient.invalidateQueries(['goalNow']);
       },
       onError(error, variables, context) {
         console.log('목표 완료하기 api에 에러뜸 ');
@@ -26,7 +33,7 @@ const GoalClear = () => {
   );
 
   const handleClick = () => {
-    clearGoal();
+    clearGoal(id);
   };
 
   return (

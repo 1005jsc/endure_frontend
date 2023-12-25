@@ -2,19 +2,21 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
-import { ClickNumDataType, GoalDataType, GoalType } from '../Types/types';
+
 import GoalInput from '../components/Main/GoalInput';
 import GoalClear from '../components/Main/GoalClear';
+import { GoalType, ResponseType } from '../Types/types';
 
 const MainPage = () => {
   const {
-    data: clickNumData,
+    data: { data: currentGoal, message } = {
+      currentGoal: {} as GoalType,
+      message: undefined,
+    },
     isLoading,
     isError,
-  } = useQuery<ClickNumDataType>(['clickNum'], async () => {
-    const response = await axios.get(
-      `${process.env.REACT_APP_SERVER}/clickNum`
-    );
+  } = useQuery<ResponseType<GoalType>>(['goalNow'], async () => {
+    const response = await axios.get(`${process.env.REACT_APP_SERVER}/goal`);
 
     return response.data;
   });
@@ -22,16 +24,17 @@ const MainPage = () => {
   const queryClient = useQueryClient();
 
   const { mutate: increaseClickNum } = useMutation(
-    async () => {
-      const response = await axios.put(
-        `${process.env.REACT_APP_SERVER}/clickNum`
+    async (id: number) => {
+      const response = await axios.patch(
+        `${process.env.REACT_APP_SERVER}/goal/endureNum`,
+        { id }
       );
 
       return response.data;
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['clickNum']);
+        queryClient.invalidateQueries(['goalNow']);
       },
       onError(error, variables, context) {
         console.log('에러뜸 11');
@@ -40,7 +43,9 @@ const MainPage = () => {
   );
 
   const handleClick = () => {
-    increaseClickNum();
+    if (!currentGoal?.id) return;
+
+    increaseClickNum(currentGoal.id);
   };
 
   if (isLoading) {
@@ -53,34 +58,30 @@ const MainPage = () => {
 
   return (
     <MainPageSec>
-      <GoalInput />
+      {/* <GoalInput /> */}
 
       <EndureButton onClick={handleClick}>忍</EndureButton>
 
       <MessageDiv>
         <ClickNumSpan>
-          {clickNumData?.currentNum}/
-          {clickNumData?.currentNum
-            ? clickNumData?.currentNum >= 0 && clickNumData?.currentNum <= 99
+          {currentGoal?.endureNum}/
+          {currentGoal?.endureNum
+            ? currentGoal?.endureNum >= 0 && currentGoal?.endureNum <= 99
               ? 100
-              : clickNumData?.currentNum >= 100 &&
-                clickNumData?.currentNum <= 199
+              : currentGoal?.endureNum >= 100 && currentGoal?.endureNum <= 199
               ? 200
-              : clickNumData?.currentNum >= 200 &&
-                clickNumData?.currentNum <= 299
+              : currentGoal?.endureNum >= 200 && currentGoal?.endureNum <= 299
               ? 300
-              : clickNumData?.currentNum >= 300 &&
-                clickNumData?.currentNum <= 399
+              : currentGoal?.endureNum >= 300 && currentGoal?.endureNum <= 399
               ? 400
-              : clickNumData?.currentNum >= 400 &&
-                clickNumData?.currentNum <= 500
+              : currentGoal?.endureNum >= 400 && currentGoal?.endureNum <= 500
               ? 500
               : 100
             : 100}
         </ClickNumSpan>
-        <MessageSpan>{clickNumData?.message}</MessageSpan>
+        <MessageSpan>{message}</MessageSpan>
       </MessageDiv>
-      <GoalClear />
+      {currentGoal?.id && <GoalClear id={currentGoal?.id} />}
     </MainPageSec>
   );
 };

@@ -1,11 +1,13 @@
-export type ClickNumType = number;
-
-export type ClickNumDataType = {
-  currentNum: ClickNumType;
-  message: string;
+export type GoalType = {
+  id: number;
+  goalName: string | null | undefined;
+  createdDate: string;
+  done: 0 | 1;
+  endureNum: number;
+  doneDate: string | null | undefined;
 };
 
-export type GoalType = string | undefined;
-export type GoalDataType = {
-  goal: GoalType;
+export type ResponseType<T> = {
+  data: T;
+  message: string | undefined;
 };

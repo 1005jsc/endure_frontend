@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { GoalDataType, GoalType } from '../../Types/types';
+
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -8,65 +8,65 @@ import KeyDetector from '../../hooks/KeyDetector';
 type GoalInputProps = {};
 
 const GoalInput = ({}: GoalInputProps) => {
-  const [newGoal, setNewGoal] = useState<string | undefined>('');
+  // const [newGoal, setNewGoal] = useState<string | undefined>('');
 
-  const {
-    data: goalData,
-    isLoading: isGoalLoading,
-    isError: isGoalError,
-  } = useQuery<GoalDataType>(['goal'], async () => {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER}/goal`);
+  // const {
+  //   data: goalData,
+  //   isLoading: isGoalLoading,
+  //   isError: isGoalError,
+  // } = useQuery<GoalDataType>(['goal'], async () => {
+  //   const response = await axios.get(`${process.env.REACT_APP_SERVER}/goal`);
 
-    return response.data;
-  });
+  //   return response.data;
+  // });
 
-  useEffect(() => {
-    setNewGoal(goalData?.goal);
-  }, [goalData]);
+  // useEffect(() => {
+  //   setNewGoal(goalData?.goal);
+  // }, [goalData]);
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const { mutate: setGoal } = useMutation(
-    async (goal: GoalDataType) => {
-      console.log('보내졌으');
-      const response = await axios.put(
-        `${process.env.REACT_APP_SERVER}/goal`,
-        goal
-      );
+  // const { mutate: setGoal } = useMutation(
+  //   async (goal: GoalDataType) => {
+  //     console.log('보내졌으');
+  //     const response = await axios.put(
+  //       `${process.env.REACT_APP_SERVER}/goal`,
+  //       goal
+  //     );
 
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['goal']);
-      },
-      onError(error, variables, context) {
-        console.log('목표 보내기 api에 에러뜸 ');
-      },
-    }
-  );
+  //     return response.data;
+  //   },
+  //   {
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries(['goal']);
+  //     },
+  //     onError(error, variables, context) {
+  //       console.log('목표 보내기 api에 에러뜸 ');
+  //     },
+  //   }
+  // );
 
-  const handleGoalChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setNewGoal(e.target.value);
-  };
+  // const handleGoalChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  //   setNewGoal(e.target.value);
+  // };
 
-  const handleBlur = () => {
-    if (newGoal !== goalData?.goal) {
-      setGoal({ goal: newGoal });
-    }
-  };
+  // const handleBlur = () => {
+  //   if (newGoal !== goalData?.goal) {
+  //     setGoal({ goal: newGoal });
+  //   }
+  // };
 
-  const handleKeyPress = (key: any) => {
-    if (key === 'Enter') {
-      if (newGoal !== goalData?.goal) {
-        setGoal({ goal: newGoal });
-      }
-    }
-  };
+  // const handleKeyPress = (key: any) => {
+  //   if (key === 'Enter') {
+  //     if (newGoal !== goalData?.goal) {
+  //       setGoal({ goal: newGoal });
+  //     }
+  //   }
+  // };
 
   return (
     <GoalInputDiv>
-      <GoalTitleSpan>목표 : </GoalTitleSpan>
+      {/* <GoalTitleSpan>목표 : </GoalTitleSpan>
       <GoalInputInput
         onBlur={handleBlur}
         onChange={handleGoalChange}
@@ -74,7 +74,7 @@ const GoalInput = ({}: GoalInputProps) => {
         value={newGoal ? newGoal : ''}
         maxLength={99}
       />
-      <KeyDetector sendKeyValue={handleKeyPress} />
+      <KeyDetector sendKeyValue={handleKeyPress} /> */}
     </GoalInputDiv>
   );
 };
