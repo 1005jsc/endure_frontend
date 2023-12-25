@@ -58,7 +58,9 @@ const MainPage = () => {
 
   return (
     <MainPageSec>
-      {/* <GoalInput /> */}
+      {currentGoal?.id && (
+        <GoalInput id={currentGoal.id} goalName={currentGoal.goalName} />
+      )}
 
       <EndureButton onClick={handleClick}>忍</EndureButton>
 
