@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import GoalInput from '../components/Main/GoalInput';
 import GoalClear from '../components/Main/GoalClear';
 import { GoalType, ResponseType } from '../Types/types';
+import GoalList from '../components/Main/GoalList';
 
 const MainPage = () => {
   const {
@@ -35,6 +36,7 @@ const MainPage = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['goalNow']);
+        queryClient.invalidateQueries(['goalList']);
       },
       onError(error, variables, context) {
         console.log('에러뜸 11');
@@ -48,9 +50,9 @@ const MainPage = () => {
     increaseClickNum(currentGoal.id);
   };
 
-  if (isLoading) {
-    return '로딩중...';
-  }
+  // if (isLoading) {
+  //   return '로딩중...';
+  // }
 
   if (isError) {
     return '서버데이터를 불러오는데 에러가 났습니다';
@@ -84,6 +86,7 @@ const MainPage = () => {
         <MessageSpan>{message}</MessageSpan>
       </MessageDiv>
       {currentGoal?.id && <GoalClear id={currentGoal?.id} />}
+      <GoalList />
     </MainPageSec>
   );
 };
@@ -118,4 +121,5 @@ const ClickNumSpan = styled.span`
 `;
 const MessageSpan = styled.span`
   margin-bottom: 16px;
+  /* border: 1px solid black; */
 `;

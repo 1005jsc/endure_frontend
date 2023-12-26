@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
-import { convertJsDateToMysqlDatetime } from '../../util/date/date';
+import {
+  convertJsDateToMysqlDatetime,
+  convertJsDateToMysqlDatetime3,
+} from '../../util/date/date';
 
 type GoalClearProps = {
   id: number;
@@ -16,7 +19,7 @@ const GoalClear = ({ id }: GoalClearProps) => {
         `${process.env.REACT_APP_SERVER}/goal/done`,
         {
           id: id,
-          doneDate: convertJsDateToMysqlDatetime(),
+          doneDate: convertJsDateToMysqlDatetime3(),
         }
       );
 
@@ -25,6 +28,7 @@ const GoalClear = ({ id }: GoalClearProps) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['goalNow']);
+        queryClient.invalidateQueries(['goalList']);
       },
       onError(error, variables, context) {
         console.log('목표 완료하기 api에 에러뜸 ');
@@ -45,7 +49,9 @@ const GoalClear = ({ id }: GoalClearProps) => {
 
 export default GoalClear;
 
-const GoalClearDiv = styled.div``;
+const GoalClearDiv = styled.div`
+  margin-bottom: 60px;
+`;
 const GoalClearButton = styled.button`
   display: block;
   margin: auto;

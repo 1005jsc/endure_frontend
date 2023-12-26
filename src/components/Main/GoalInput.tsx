@@ -52,7 +52,10 @@ const GoalInput = ({ id, goalName }: GoalInputProps) => {
 
   const handleKeyPress = (key: any) => {
     if (key === 'Enter') {
-      if (newGoal !== goalName) setGoal(newGoal);
+      if (newGoal !== goalName) {
+        setGoal(newGoal);
+        (document.activeElement as HTMLElement).blur();
+      }
     }
   };
 
