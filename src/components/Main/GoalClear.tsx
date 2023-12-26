@@ -5,6 +5,7 @@ import {
   convertJsDateToMysqlDatetime,
   convertJsDateToMysqlDatetime3,
 } from '../../util/date/date';
+import applyDebouncing from '../../util/api/debouncing';
 
 type GoalClearProps = {
   id: number;
@@ -37,7 +38,9 @@ const GoalClear = ({ id }: GoalClearProps) => {
   );
 
   const handleClick = () => {
-    clearGoal(id);
+    applyDebouncing(() => {
+      clearGoal(id);
+    }, 200);
   };
 
   return (
