@@ -35,6 +35,7 @@ const GoalInput = ({ id, goalName }: GoalInputProps) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['goalNow']);
+        queryClient.invalidateQueries(['goalList']);
       },
       onError(error, variables, context) {
         console.log('목표 보내기 api에 에러뜸 ');
@@ -67,7 +68,8 @@ const GoalInput = ({ id, goalName }: GoalInputProps) => {
         onChange={handleGoalChange}
         type="text"
         value={newGoal ? newGoal : ''}
-        maxLength={99}
+        maxLength={36}
+        placeholder="목표이름 36자 이하로 입력"
       />
       <KeyDetector sendKeyValue={handleKeyPress} />
     </GoalInputDiv>

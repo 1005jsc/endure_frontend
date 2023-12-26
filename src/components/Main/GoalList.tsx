@@ -50,7 +50,6 @@ const GoalList = ({}: GoalListProps) => {
       </TitleDiv>
 
       <ContainerDiv>
-        {/* <ContainerDiv> */}
         {goalList.map((goal, i) => {
           return (
             <SmallDiv key={goal.id} removebordertop={i === 0 ? 1 : 0}>
@@ -112,8 +111,10 @@ const CommonTitleDiv = styled.div`
   border-right: 1px solid black;
 `;
 
-const GoalNameTitleDiv = styled(CommonTitleDiv)``;
 const CreatedDateTitleDiv = styled(CommonTitleDiv)``;
+const GoalNameTitleDiv = styled(CommonTitleDiv)`
+  flex: 3;
+`;
 const DoneTitleDiv = styled(CommonTitleDiv)``;
 const EndureNumTitleDiv = styled(CommonTitleDiv)``;
 const DoneDateTitleDiv = styled(CommonTitleDiv)`
@@ -162,17 +163,26 @@ const CommonDiv = styled.div`
 `;
 
 const CreatedDateDiv = styled(CommonDiv)``;
-const GoalNameDiv = styled(CommonDiv)``;
+const GoalNameDiv = styled(CommonDiv)`
+  /* padding: 20px 12px; */
+  flex: 3;
+`;
 const DoneDiv = styled(CommonDiv)``;
 const EndureNumDiv = styled(CommonDiv)``;
 const DoneDateDiv = styled(CommonDiv)`
   border-right: none;
 `;
 
-const CommonSpan = styled.span``;
+const CommonSpan = styled.span`
+  line-height: 18px;
+`;
 
-const CreatedDateSpan = styled(CommonSpan)``;
+const CreatedDateSpan = styled(CommonSpan)`
+  font-size: 14px;
+`;
 const GoalNameSpan = styled(CommonSpan)``;
 const DoneSpan = styled(CommonSpan)``;
 const EndureNumSpan = styled(CommonSpan)``;
-const DoneDateSpan = styled(CommonSpan)``;
+const DoneDateSpan = styled(CommonSpan)`
+  font-size: 14px;
+`;
